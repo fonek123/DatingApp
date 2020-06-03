@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using DatingApp.api.Data;
 using DatingApp.api.Dtos;
 using DatingApp.api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.api.Controllers
 {
-    [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
-
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _repo;
@@ -48,6 +49,9 @@ namespace DatingApp.api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {
+            
+            
+            
             var userFromRepo = await _repo.Login(userForLoginDTO.Username.ToLower(), userForLoginDTO.Password);
             
             if (userFromRepo == null)
@@ -77,6 +81,7 @@ namespace DatingApp.api.Controllers
             return Ok(new {
                 token = tokenHandler.WriteToken(token)
             });
+            
         }
     }
 }
