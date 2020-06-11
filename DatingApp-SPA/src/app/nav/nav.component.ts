@@ -25,7 +25,7 @@ export class NavComponent implements OnInit {
         this.alertify.success('Logged in succesfully');
       },
       (error) => {
-        this.alertify.error(error);
+        this.alertify.error('You have to register first');
       },
       () => this.router.navigate(['/members'])
     );
